@@ -22,3 +22,5 @@ vim.keymap.set(
 map("n", "<leader>CA", 'ggVG"+y', opts)
 map("v", "<C-y>", '"+y', opts)
 map("n", "U", "<C-r>")
+map("n", "<A-h>", "zH", opts)
+map("n", "<A-l>", "zL", opts)
