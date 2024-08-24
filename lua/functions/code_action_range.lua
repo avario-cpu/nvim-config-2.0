@@ -11,8 +11,11 @@ function M.code_action_on_selection()
     return
   end
 
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
+  -- Markers update when leaving visual mode
+  vim.cmd([[ execute "normal! \<ESC>" ]])
+
+  local start_pos = vim.fn.getcharpos("'<")
+  local end_pos = vim.fn.getcharpos("'>")
 
   -- Print raw positions
   print("Raw start position:", vim.inspect(start_pos))
@@ -36,7 +39,6 @@ function M.code_action_on_selection()
 
   -- Ensure that the range is valid
   if start_row >= 0 and start_col >= 0 and end_row >= 0 and end_col >= 0 then
-    -- Create the range
     local range = {
       start = { line = start_row, character = start_col },
       ["end"] = { line = end_row, character = end_col },
@@ -45,10 +47,19 @@ function M.code_action_on_selection()
     -- Print the final range
     print("Final range:", vim.inspect(range))
 
+    local opts = {
+      context = {
+        diagnostics = {},
+        only = nil,
+      },
+      range = {
+        start = { start_row, start_col },
+        ["end"] = { end_row, end_col },
+      },
+    }
+
     -- Invoke code action with the range
-    vim.lsp.buf.code_action({
-      range = range,
-    })
+    vim.lsp.buf.code_action(opts)
   else
     vim.notify("Invalid selection range for code action", vim.log.levels.ERROR)
   end
