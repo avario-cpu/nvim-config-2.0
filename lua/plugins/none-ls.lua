@@ -8,7 +8,7 @@ return {
           -- null_ls.builtins.formatting.isort,
           -- null_ls.builtins.formatting.black,
           -- null_ls.builtins.diagnostics.flake8,
-          null_ls.builtins.diagnostics.mypy,
+          -- null_ls.builtins.diagnostics.mypy,
           null_ls.builtins.diagnostics.pylint,
         },
         autostart = true,
