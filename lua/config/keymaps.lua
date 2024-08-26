@@ -19,6 +19,8 @@ vim.keymap.set(
   { noremap = true, silent = true, desc = "Code action on selection" }
 )
 
+-- vim.api.nvim_set_keymap("n", "<leader>gg", [[<Cmd>lua StartLazygit()<CR>]], { noremap = true, silent = true })
+
 map("n", "<leader>CA", 'ggVG"+y', opts)
 map("v", "<C-y>", '"+y', opts)
 map("n", "U", "<C-r>")
