@@ -45,10 +45,6 @@ end
 telescope.setup({
   defaults = {
     mappings = {
-      i = {
-        ["="] = insert_absolute_path,
-        ["-"] = insert_relative_path,
-      },
       n = {
         ["="] = insert_absolute_path,
         ["-"] = insert_relative_path,
