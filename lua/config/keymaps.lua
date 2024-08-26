@@ -24,3 +24,6 @@ map("v", "<C-y>", '"+y', opts)
 map("n", "U", "<C-r>")
 map("n", "<A-h>", "zH", opts)
 map("n", "<A-l>", "zL", opts)
+
+-- test too
+-- but different
