@@ -14,8 +14,8 @@ function M.code_action_on_selection()
   -- Markers update when leaving visual mode
   vim.cmd([[ execute "normal! \<ESC>" ]])
 
-  local start_pos = vim.fn.getcharpos("'<")
-  local end_pos = vim.fn.getcharpos("'>")
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
 
   -- Print raw positions
   print("Raw start position:", vim.inspect(start_pos))
@@ -28,10 +28,10 @@ function M.code_action_on_selection()
   end
 
   -- Convert positions to zero-indexed (LSP format)
-  local start_row = start_pos[2] - 1
-  local start_col = start_pos[3] - 1
-  local end_row = end_pos[2] - 1
-  local end_col = end_pos[3] - 1
+  local start_row = start_pos[2] - 0
+  local start_col = start_pos[3] - 0
+  local end_row = end_pos[2] - 0
+  local end_col = end_pos[3] - 0
 
   -- Print converted positions
   print("Converted start position: line =", start_row, "character =", start_col)
@@ -53,7 +53,7 @@ function M.code_action_on_selection()
         only = nil,
       },
       range = {
-        start = { start_row, start_col },
+        ["start"] = { start_row, start_col },
         ["end"] = { end_row, end_col },
       },
     }

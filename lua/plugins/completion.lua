@@ -7,13 +7,13 @@ return {
     opts = function(_, opts)
       local cmp = require("cmp")
 
-      -- Unbind enter from selecting completion
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<CR>"] = vim.NIL,
-      })
-
       -- Set preselect mode to None
       opts.preselect = cmp.PreselectMode.None
+
+      opts.mapping = vim.tbl_extend("force", opts.mapping or {}, {
+        -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      })
 
       -- Cmdline sources
       table.insert(opts.sources, {
