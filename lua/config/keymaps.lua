@@ -50,13 +50,8 @@ map(
   opts,
   { desc = "Append file content to system clipboard" }
 )
-map(
-  "n",
-  "<leader>+",
-  clipboard_utils.append_file_to_system_register,
-  opts,
-  { desc = "Send register to system clipboard" }
-)
+map("n", "<leader>+", clipboard_utils.append_reg_to_sys_clipboard, opts, { desc = "Send register to system clipboard" })
+
 -- Lazy
 map("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy" })
 map("n", "<leader>lx", "<cmd>LazyExtras<cr>", { desc = "LazyExtras" })
