@@ -17,6 +17,9 @@ return {
         },
       }
 
+      opts.window.mappings["s"] = "none" -- unbind to be able to use flash
+      opts.window.mappings["S"] = "open_vsplit"
+
       return opts
     end,
   },
