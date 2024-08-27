@@ -4,6 +4,12 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-fzf-native.nvim",
   },
+
+  keys = {
+    { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+    { "<leader>fr", LazyVim.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
+  },
+
   opts = function(_, opts)
     local actions = require("telescope.actions")
     local builtin = require("telescope.builtin")
