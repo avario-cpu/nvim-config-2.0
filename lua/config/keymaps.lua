@@ -57,3 +57,6 @@ map(
   opts,
   { desc = "Send register to system clipboard" }
 )
+-- Lazy
+map("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy" })
+map("n", "<leader>lx", "<cmd>LazyExtras<cr>", { desc = "LazyExtras" })
