@@ -25,8 +25,8 @@ vim.api.nvim_set_keymap("n", "<leader>gg", [[<Cmd>lua StartLazygit()<CR>]], { no
 map("n", "<leader>CA", 'ggVG"+y', opts)
 map("v", "<C-y>", '"+y', opts)
 map("n", "U", "<C-r>")
-map("n", "<A-h>", "zH", opts)
-map("n", "<A-l>", "zL", opts)
+-- map("n", "<A-h>", "zH", opts)
+-- map("n", "<A-l>", "zL", opts)
 
 -- Navigation
 map("n", "G", "Gzz", opts)
@@ -47,14 +47,22 @@ map(
   "n",
   "<leader>CP",
   clipboard_utils.append_file_to_system_register,
-  opts,
   { desc = "Append file content to system clipboard" }
 )
-map("n", "<leader>+", clipboard_utils.append_reg_to_sys_clipboard, opts, { desc = "Send register to system clipboard" })
+map(
+  "n",
+  "<leader>+",
+  clipboard_utils.append_reg_to_sys_clipboard,
+  { noremap = true, silent = true, desc = "Send register to system clipboard" }
+)
 
 -- Lazy
-map("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy" })
-map("n", "<leader>lx", "<cmd>LazyExtras<cr>", { desc = "LazyExtras" })
+map("n", "<leader>ll", "<cmd>Lazy<cr>", { noremap = true, silent = true, desc = "Lazy" })
+map("n", "<leader>lx", "<cmd>LazyExtras<cr>", { noremap = true, silent = true, desc = "LazyExtras" })
+
+-- Buffer picking
+map("n", "gb", "<cmd>BufferLinePick<CR>", { noremap = true, silent = true, desc = "Pick buffer" })
+
 vim.keymap.set({ "i", "s" }, "<A-n>", function()
   return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
 end, { expr = true, silent = true })
