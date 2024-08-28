@@ -43,6 +43,7 @@ return {
         },
 
         ruff_lsp = {},
+        yamlls = {},
       },
     },
   },
@@ -74,6 +75,7 @@ return {
       formatters_by_ft = {
         ["powershell"] = { "powershell_es" },
         ["python"] = { "black" },
+        ["yaml"] = { "prettier" },
       },
     },
   },
