@@ -55,3 +55,10 @@ map("n", "<leader>+", clipboard_utils.append_reg_to_sys_clipboard, opts, { desc 
 -- Lazy
 map("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy" })
 map("n", "<leader>lx", "<cmd>LazyExtras<cr>", { desc = "LazyExtras" })
+vim.keymap.set({ "i", "s" }, "<A-n>", function()
+  return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
+end, { expr = true, silent = true })
+
+vim.keymap.set({ "i", "s" }, "<A-p>", function()
+  return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<S-Tab>"
+end, { expr = true, silent = true })

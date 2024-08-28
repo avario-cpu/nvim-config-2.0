@@ -9,13 +9,12 @@ return {
 
       -- Set preselect mode to None
       opts.preselect = cmp.PreselectMode.None
+      local confirm_mapping = cmp.mapping.confirm({ select = true })
 
       opts.mapping = vim.tbl_extend("force", opts.mapping or {}, {
-        -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<c-y>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
       })
 
-      -- Cmdline sources
       table.insert(opts.sources, {
         name = "cmdline",
         option = {
@@ -25,7 +24,9 @@ return {
 
       -- Setup for cmdline completion
       cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = vim.tbl_extend("force", cmp.mapping.preset.cmdline(), {
+          ["<c-y>"] = cmp.mapping.confirm({ select = true }),
+        }),
         sources = cmp.config.sources({
           { name = "path" },
         }, {
@@ -35,7 +36,9 @@ return {
 
       -- Setup for search completion
       cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = vim.tbl_extend("force", cmp.mapping.preset.cmdline(), {
+          ["<c-y>"] = cmp.mapping.confirm({ select = true }),
+        }),
         sources = {
           { name = "buffer" },
         },
