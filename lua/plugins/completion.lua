@@ -1,4 +1,4 @@
-vim.o.completeopt = "menuone,noselect,preview"
+-- vim.o.completeopt = "menuone,noselect,preview"
 
 return {
   {
@@ -43,6 +43,15 @@ return {
           { name = "buffer" },
         },
       })
+
+      -- Fix ghost text on completion
+      local feedkeys = vim.api.nvim_feedkeys
+      local termcodes = vim.api.nvim_replace_termcodes
+      local function feed_space_backspace()
+        feedkeys(termcodes(" <BS>", true, false, true), "n", true)
+      end
+
+      cmp.event:on("confirm_done", feed_space_backspace)
 
       return opts
     end,
