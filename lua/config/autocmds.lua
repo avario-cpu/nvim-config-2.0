@@ -21,3 +21,9 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
     end, { expr = true, buffer = true })
   end,
 })
+
+-- Enable wrap for diffs, with no mid-word wrap
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "diff",
+  command = "setlocal wrap linebreak",
+})
