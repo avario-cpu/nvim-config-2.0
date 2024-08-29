@@ -3,8 +3,8 @@ return {
   opts = {
     incremental_selection = {
       keymaps = {
-        init_selection = "<C-w>",
-        node_incremental = "<C-w>",
+        init_selection = "v<CR>",
+        node_incremental = "<CR>",
       },
     },
   },
