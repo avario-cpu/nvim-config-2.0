@@ -2,6 +2,8 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
+vim.cmd([[autocmd FileType * set formatoptions-=ro]])
+
 -- delete dashboard weird temp shadas
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -26,4 +28,13 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "diff",
   command = "setlocal wrap linebreak",
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.txt",
+  callback = function()
+    if vim.bo.buftype == "help" then
+      vim.cmd("wincmd L")
+    end
+  end,
 })

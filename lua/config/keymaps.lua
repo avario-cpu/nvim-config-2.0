@@ -32,8 +32,8 @@ map("n", "U", "<C-r>")
 map("n", "G", "Gzz", opts)
 map("n", "<C-d>", "<C-d>zz", opts)
 map("n", "<C-u>", "<C-u>zz", opts)
-map("n", "{", "{zz", opts)
-map("n", "}", "}zz", opts)
+-- map("n", "{", "{zz", opts)
+-- map("n", "}", "}zz", opts)
 map("n", "n", "nzz", opts)
 map("n", "N", "Nzz", opts)
 map("n", "*", "*zz", opts)
@@ -70,3 +70,9 @@ end, { expr = true, silent = true })
 vim.keymap.set({ "i", "s" }, "<A-p>", function()
   return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<S-Tab>"
 end, { expr = true, silent = true })
+
+-- Map <Enter> to insert a new line below and return to the original line
+vim.api.nvim_set_keymap("n", "<Enter>", "o<Esc>k", { noremap = true, silent = true })
+
+-- Map <C-Enter> to insert a new line above and return to the original line (uses a custom char to allow binding)
+vim.api.nvim_set_keymap("n", "<A-Enter>", "O<Esc>j", { noremap = true, silent = true })

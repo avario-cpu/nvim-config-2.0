@@ -7,6 +7,8 @@ return {
     opts = function(_, opts)
       local cmp = require("cmp")
 
+      opts.experimental.ghost_text = false
+
       -- Set preselect mode to None
       opts.preselect = cmp.PreselectMode.None
       local confirm_mapping = cmp.mapping.confirm({ select = true })
