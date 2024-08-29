@@ -13,3 +13,4 @@ vim.g.indent_blankline_show_current_context = false
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.listchars:append("trail:·")
+vim.opt.updatetime = 50
