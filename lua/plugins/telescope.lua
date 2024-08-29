@@ -40,8 +40,8 @@ return {
       return displayer({
         { icon or " ", icon_hl },
         { transformed_path, "TelescopeResultsStruct" },
-        { line_col, "TelescopeResultsNumber" },
-        { entry.text:gsub("^%s+", ""), "TelescopeResultsStruct" },
+        { entry.lnum .. ":" .. entry.col, "TelescopeResultsNumber" },
+        { (entry.text or ""):gsub("^%s+", ""), "TelescopeResultsStruct" },
       })
     end
 
@@ -53,35 +53,11 @@ return {
       return new_entry
     end
 
-    -- New custom entry display for LSP references
-    local function lsp_ref_entry_display(entry)
-      local icons = require("nvim-web-devicons")
-      local utils = require("telescope.utils")
-      local icon, icon_hl = icons.get_icon(entry.filename, vim.fn.fnamemodify(entry.filename, ":e"))
-      local icon_width = vim.fn.strdisplaywidth(icon or " ")
-      local displayer = require("telescope.pickers.entry_display").create({
-        separator = " ",
-        items = {
-          { width = icon_width },
-          { width = 40 },
-          { width = 8 },
-          { remaining = true },
-        },
-      })
-      local transformed_path = utils.transform_path({ path_display = { "smart" } }, entry.filename)
-      return displayer({
-        { icon or " ", icon_hl },
-        { transformed_path, "TelescopeResultsStruct" },
-        { entry.lnum .. ":" .. entry.col, "TelescopeResultsNumber" },
-        { (entry.text or ""):gsub("^%s+", ""), "TelescopeResultsStruct" },
-      })
-    end
-
     -- New custom entry maker for LSP references
     local function lsp_ref_entry_maker(entry)
       local make_entry = require("telescope.make_entry")
       local new_entry = make_entry.gen_from_quickfix()(entry)
-      new_entry.display = lsp_ref_entry_display
+      new_entry.display = custom_entry_display
       return new_entry
     end
 
@@ -93,7 +69,7 @@ return {
           map("i", "<c-e>", actions.to_fuzzy_refine)
           return true
         end,
-        layout_strategy = "vertical",
+        layout_strategy = "horizontal",
         layout_config = {
           width = 0.8,
           height = 0.9,
@@ -107,7 +83,7 @@ return {
     local old_lsp_references = builtin.lsp_references
     builtin.lsp_references = function(lsp_references_opts)
       lsp_references_opts = vim.tbl_deep_extend("force", {
-        layout_strategy = "vertical",
+        layout_strategy = "horizontal",
         layout_config = {
           width = 0.8,
           height = 0.9,
