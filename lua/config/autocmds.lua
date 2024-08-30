@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*.txt",
+  pattern = { "*.txt", "*.md" },
   callback = function()
     if vim.bo.buftype == "help" then
       vim.cmd("wincmd L")

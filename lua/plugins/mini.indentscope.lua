@@ -9,5 +9,8 @@ return {
         unit = "step",
       }),
     },
+    mappings = {
+      object_scope_with_border = "",
+    },
   },
 }
