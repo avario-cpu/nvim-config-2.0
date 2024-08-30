@@ -3,7 +3,7 @@ return {
   opts = {
     draw = {
       delay = 1,
-      animation = require("mini.indentscope").gen_animation.quadratic({
+      animation = require("mini.indentscope").gen_animation.cubic({
         easing = "in-out",
         duration = 4,
         unit = "step",

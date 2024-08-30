@@ -4,8 +4,12 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/cmp-cmdline" },
+    enabled = true,
     opts = function(_, opts)
       local cmp = require("cmp")
+      local no_action = function(fallback)
+        fallback()
+      end
 
       opts.experimental.ghost_text = false
 
@@ -13,21 +17,27 @@ return {
       opts.preselect = cmp.PreselectMode.None
       local confirm_mapping = cmp.mapping.confirm({ select = true })
 
+      -- Bind keymaps
       opts.mapping = vim.tbl_extend("force", opts.mapping or {}, {
-        ["<c-y>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
-      })
-
-      table.insert(opts.sources, {
-        name = "cmdline",
-        option = {
-          ignore_cmds = { "Man", "!" },
-        },
+        ["<Tab>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
+        ["<C-n>"] = cmp.mapping(
+          cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          { "i", "c", "s" }
+        ),
+        ["<C-p>"] = cmp.mapping(
+          cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+          { "i", "c", "s" }
+        ),
       })
 
       -- Setup for cmdline completion
       cmp.setup.cmdline(":", {
         mapping = vim.tbl_extend("force", cmp.mapping.preset.cmdline(), {
-          ["<c-y>"] = cmp.mapping.confirm({ select = true }),
+          --   ["<c-y>"] = cmp.mapping.confirm({ select = true }),
+          -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<Tab>"] = cmp.mapping(no_action),
+          ["<S-Tab>"] = cmp.mapping(no_action),
         }),
         sources = cmp.config.sources({
           { name = "path" },
@@ -39,7 +49,11 @@ return {
       -- Setup for search completion
       cmp.setup.cmdline("/", {
         mapping = vim.tbl_extend("force", cmp.mapping.preset.cmdline(), {
-          ["<c-y>"] = cmp.mapping.confirm({ select = true }),
+          --   ["<c-y>"] = cmp.mapping.confirm({ select = true }),
+          -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<Tab>"] = cmp.mapping(no_action),
+          ["<S-Tab>"] = cmp.mapping(no_action),
         }),
         sources = {
           { name = "buffer" },
