@@ -36,7 +36,8 @@ return {
           --   ["<c-y>"] = cmp.mapping.confirm({ select = true }),
           -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<Tab>"] = cmp.mapping(no_action),
+          -- ["<Tab>"] = cmp.mapping(no_action),
+          ["<Tab>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
           ["<S-Tab>"] = cmp.mapping(no_action),
         }),
         sources = cmp.config.sources({
@@ -52,7 +53,8 @@ return {
           --   ["<c-y>"] = cmp.mapping.confirm({ select = true }),
           -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<Tab>"] = cmp.mapping(no_action),
+          -- ["<Tab>"] = cmp.mapping(no_action),
+          ["<Tab>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
           ["<S-Tab>"] = cmp.mapping(no_action),
         }),
         sources = {
