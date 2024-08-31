@@ -21,6 +21,7 @@ vim.keymap.set(
 
 -- override OG lazygit with our custom solution
 vim.api.nvim_set_keymap("n", "<leader>gg", [[<Cmd>lua StartLazygit()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gl", [[<Cmd>lua OpenLazygitLogs()<CR>]], { noremap = true, silent = true })
 
 map("n", "<leader>CA", 'ggVG"+y', opts)
 map("v", "<C-y>", '"+y', opts)

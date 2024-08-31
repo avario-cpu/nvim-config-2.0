@@ -43,6 +43,10 @@ function LazygitEdit(original_buffer)
   vim.cmd("e " .. relative_filepath)
 end
 
+function OpenLazygitLogs()
+  Util.terminal.open({ "lazygit", "log" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false })
+end
+
 -- Function to start Lazygit in a floating terminal
 function StartLazygit()
   local current_buffer = vim.api.nvim_get_current_buf()
