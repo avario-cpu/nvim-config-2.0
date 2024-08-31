@@ -9,9 +9,7 @@ return {
     enabled = true,
     opts = function(_, opts)
       local cmp = require("cmp")
-      local no_action = function(fallback)
-        fallback()
-      end
+      local no_action = function() end
 
       opts.experimental.ghost_text = false
 
@@ -21,15 +19,9 @@ return {
 
       -- Bind keymaps
       opts.mapping = vim.tbl_extend("force", opts.mapping or {}, {
-        ["<Tab>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
-        ["<C-n>"] = cmp.mapping(
-          cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-          { "i", "c", "s" }
-        ),
-        ["<C-p>"] = cmp.mapping(
-          cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          { "i", "c", "s" }
-        ),
+        ["<Tab>"] = cmp.mapping(confirm_mapping, { "c" }),
+        ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+        ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
       })
 
       -- Setup for cmdline completion
@@ -39,8 +31,8 @@ return {
           -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           -- ["<Tab>"] = cmp.mapping(no_action),
-          ["<Tab>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
-          ["<S-Tab>"] = cmp.mapping(no_action),
+          ["<Tab>"] = cmp.mapping(confirm_mapping, { "c" }),
+          -- ["<S-Tab>"] = cmp.mapping(no_action),
         }),
         sources = cmp.config.sources({
           { name = "path" },
@@ -56,8 +48,8 @@ return {
           -- ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           -- ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           -- ["<Tab>"] = cmp.mapping(no_action),
-          ["<Tab>"] = cmp.mapping(confirm_mapping, { "i", "c", "s" }),
-          ["<S-Tab>"] = cmp.mapping(no_action),
+          ["<Tab>"] = cmp.mapping(confirm_mapping, { "c" }),
+          -- ["<S-Tab>"] = cmp.mapping(no_action),
         }),
         sources = {
           { name = "buffer" },
