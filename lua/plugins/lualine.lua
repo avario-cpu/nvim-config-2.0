@@ -23,6 +23,14 @@ return {
 
     opts.options.theme = custom_horizon
 
+    table.insert(opts.sections.lualine_x, 3, {
+      function()
+        return require("copilot_status").status_string()
+      end,
+      cnd = function()
+        return require("copilot_status").enabled()
+      end,
+    })
     return opts
   end,
 }
