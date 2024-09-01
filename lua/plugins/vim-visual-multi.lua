@@ -11,7 +11,12 @@ return {
       ]])
 
     -- First cursor is added with [I]nitial key as to pause the keymap to navigate better.
-    vim.api.nvim_set_keymap("n", "<Leader>I", "<M-L><M-H>", { noremap = false, silent = true })
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>I",
+      "<M-L><M-H>",
+      { noremap = false, silent = true, desc = "Inital additional cursor " }
+    )
     -- Dropoff cursor at current position
 
     vim.api.nvim_set_keymap("n", "<M-L>", "<Plug>(VM-Add-Cursor-At-Pos)", { noremap = true, silent = true })
