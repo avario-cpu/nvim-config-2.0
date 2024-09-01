@@ -84,5 +84,10 @@ vim.api.nvim_set_keymap("n", "<A-Enter>", "O<Esc>j", { noremap = true, silent = 
 vim.api.nvim_set_keymap("n", "q", "", { noremap = true })
 vim.api.nvim_set_keymap("n", "Q", "q", { noremap = true })
 
--- close quickfix
-vim.keymap.set("n", "<leader>qc", ":cclose<CR>", { noremap = true, silent = true })
+-- Toggle quickfix
+vim.keymap.set(
+  "n",
+  "<leader>qf",
+  ":lua ToggleQuickfix()<CR>",
+  { noremap = true, silent = true, desc = "Toggle quickfix" }
+)
