@@ -11,7 +11,7 @@ return {
       ]])
 
     -- First cursor is added with [I]nitial key as to pause the keymap to navigate better.
-    vim.api.nvim_set_keymap(
+    vim.keymap.set(
       "n",
       "<leader>I",
       "<M-L><M-H>",
@@ -19,12 +19,12 @@ return {
     )
     -- Dropoff cursor at current position
 
-    vim.api.nvim_set_keymap("n", "<M-L>", "<Plug>(VM-Add-Cursor-At-Pos)", { noremap = true, silent = true })
+    vim.keymap.set("n", "<M-L>", "<Plug>(VM-Add-Cursor-At-Pos)", { noremap = true, silent = true })
     -- Toggle cursors shifting with HJKL
-    vim.api.nvim_set_keymap("n", "<M-H>", "<Plug>(VM-Toggle-Mappings)", { noremap = true, silent = true })
+    vim.keymap.set("n", "<M-H>", "<Plug>(VM-Toggle-Mappings)", { noremap = true, silent = true })
 
     -- Add cursors up/down
-    vim.api.nvim_set_keymap("n", "<M-K>", "<Plug>(VM-Add-Cursor-Up)", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap("n", "<M-J>", "<Plug>(VM-Add-Cursor-Down)", { noremap = true, silent = true })
+    vim.keymap.set("n", "<M-K>", "<Plug>(VM-Add-Cursor-Up)", { noremap = true, silent = true })
+    vim.keymap.set("n", "<M-J>", "<Plug>(VM-Add-Cursor-Down)", { noremap = true, silent = true })
   end,
 }
