@@ -23,8 +23,6 @@ vim.keymap.set(
 vim.api.nvim_set_keymap("n", "<leader>gg", [[<Cmd>lua StartLazygit()<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>gl", [[<Cmd>lua OpenLazygitLogs()<CR>]], { noremap = true, silent = true })
 
-map("n", "<leader>CA", 'ggVG"+y', opts)
-map("v", "<C-y>", '"+y', opts)
 map("n", "U", "<C-r>")
 -- map("n", "<A-h>", "zH", opts)
 -- map("n", "<A-l>", "zL", opts)
@@ -46,10 +44,12 @@ map("c", "<A-p>", "<Up>")
 map("c", "<A-n>", "<Down>")
 
 -- clipboard
+map("v", "<C-y>", '"+y', opts)
+map("n", "<leader>YA", 'ggVG"+y', opts)
 local clipboard_utils = require("functions.clipboard")
 map(
   "n",
-  "<leader>CP",
+  "<leader>YP",
   clipboard_utils.append_file_to_system_register,
   { desc = "Append file content to system clipboard" }
 )
