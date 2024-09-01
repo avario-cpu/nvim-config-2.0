@@ -1,6 +1,14 @@
 return {
   "mg979/vim-visual-multi",
   enabled = true,
+  keys = {
+    { "<leader>I", desc = "Initial additional cursor" },
+    { "<M-L>", desc = "Add cursor at position" },
+    { "<M-H>", desc = "Toggle cursor mappings" },
+    { "<M-K>", desc = "Add cursor up" },
+    { "<M-J>", desc = "Add cursor down" },
+    { "<C-n>", desc = "Select next word" },
+  },
   config = function()
     -- More obvious cursor highlighting
     vim.cmd([[

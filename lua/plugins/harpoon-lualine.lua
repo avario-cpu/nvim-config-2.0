@@ -6,4 +6,5 @@ return {
       branch = "harpoon2",
     },
   },
+  event = "VeryLazy",
 }

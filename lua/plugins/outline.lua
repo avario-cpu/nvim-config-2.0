@@ -1,11 +1,10 @@
 return {
+  -- I'm using this standalone version because the LazyVim version seems to not work.
   "hedyhli/outline.nvim",
   lazy = true,
   cmd = { "Outline", "OutlineOpen" },
-  keys = { -- Example mapping to toggle outline
+  keys = {
     { "<leader>co", "<cmd>Outline<CR>", desc = "Toggle outline" },
   },
-  opts = {
-    -- Your setup opts here
-  },
+  opts = {},
 }

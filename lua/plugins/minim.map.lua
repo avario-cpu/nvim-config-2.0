@@ -22,7 +22,6 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<Leader>mc", MiniMap.close)
-    vim.keymap.set("n", "<Leader>mo", MiniMap.open)
+    -- we have to bind keys for this.
   end,
 }
