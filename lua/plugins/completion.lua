@@ -4,7 +4,6 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/cmp-cmdline" },
-    { "zbirenbaum/copilot-cmp", enabled = false },
 
     enabled = true,
     opts = function(_, opts)
