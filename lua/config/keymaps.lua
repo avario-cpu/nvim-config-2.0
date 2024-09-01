@@ -83,3 +83,6 @@ vim.api.nvim_set_keymap("n", "<A-Enter>", "O<Esc>j", { noremap = true, silent = 
 -- Rebind macro key cause mistakes are made too often lol
 vim.api.nvim_set_keymap("n", "q", "", { noremap = true })
 vim.api.nvim_set_keymap("n", "Q", "q", { noremap = true })
+
+-- close quickfix
+vim.keymap.set("n", "<leader>qc", ":cclose<CR>", { noremap = true, silent = true })
