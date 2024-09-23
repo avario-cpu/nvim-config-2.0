@@ -35,6 +35,7 @@ return {
           settings = {
             python = {
               analysis = {
+                autoSearchPaths = true,
                 typeCheckingMode = "basic",
                 diagnosticMode = "workspace",
                 useLibraryCodeForTypes = true,
@@ -47,6 +48,16 @@ return {
         yamlls = {},
       },
     },
+    on_attach = function(_, bufnr)
+      -- Set up the keybinding for organizing imports
+      vim.keymap.set("n", "<leader>ro", function()
+        local params = {
+          command = "_ruff.organizeImports",
+          arguments = { vim.uri_from_bufnr(0) },
+        }
+        vim.lsp.buf.execute_command(params)
+      end, { buffer = bufnr, desc = "Organize Imports" })
+    end,
   },
   {
     "williamboman/mason.nvim",
