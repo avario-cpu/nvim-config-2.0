@@ -77,7 +77,7 @@ end, { expr = true, silent = true })
 
 -- Map <Enter> to insert a new line below and return to the original line
 vim.api.nvim_set_keymap("n", "<Enter>", "o<Esc>k", { noremap = true, silent = true })
--- Map <C-Enter> to insert a new line above and return to the original line (uses a custom char to allow binding)
+-- Map <A-Enter> to insert a new line above and return to the original line (uses a custom char to allow binding)
 vim.api.nvim_set_keymap("n", "<A-Enter>", "O<Esc>j", { noremap = true, silent = true })
 
 -- Rebind macro key cause mistakes are made too often lol
