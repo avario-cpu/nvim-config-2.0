@@ -24,6 +24,7 @@ return {
                 pycodestyle = { enabled = false },
                 mccabe = { enabled = true },
                 mypy = { enabled = false },
+                jedi_references = { enabled = false }, -- to avoid duplicate references with pyright
               },
             },
           },
