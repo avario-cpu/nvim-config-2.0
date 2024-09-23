@@ -1,5 +1,16 @@
 local Util = require("lazyvim.util")
 
+-- Function to set ANSI color
+local function set_ansi_color(idx, color)
+  local channel_id = vim.b.terminal_job_id
+  if channel_id then
+    local command = string.format("\27]4;%d;%s\7", idx, color)
+    vim.fn.chansend(channel_id, command)
+  else
+    vim.notify("No terminal job ID found.", vim.log.levels.ERROR)
+  end
+end
+
 -- Function to check clipboard with retries
 local function getRelativeFilepath(retries, delay)
   local relative_filepath
@@ -51,6 +62,10 @@ end
 function StartLazygit()
   local current_buffer = vim.api.nvim_get_current_buf()
   local float_term = Util.terminal.open({ "lazygit" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false })
+
+  -- Set custom colors for the Lazygit terminal
+  set_ansi_color(1, "#FF0000") -- Set color 1 to red
+  set_ansi_color(2, "#00FF00") -- Set color 2 to green
 
   vim.api.nvim_buf_set_keymap(
     float_term.buf,
