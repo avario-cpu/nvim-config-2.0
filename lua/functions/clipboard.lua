@@ -10,7 +10,7 @@ end
 function M.append_empty_reg_to_system_reg()
   local unnamed_register = vim.fn.getreg('"')
   local system_register = vim.fn.getreg("+")
-  local new_register_content = system_register .. "\n\n" .. unnamed_register
+  local new_register_content = system_register .. "\n\n\n" .. unnamed_register
   vim.fn.setreg("+", new_register_content)
 end
 
