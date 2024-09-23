@@ -13,6 +13,10 @@ return {
   opts = function(_, opts)
     local actions = require("telescope.actions")
     local builtin = require("telescope.builtin")
+    local custom_path = { shorten = {
+      len = 3,
+      exclude = { -1, -2, -3 },
+    } }
 
     -- Custom entry display for live_grep (unchanged)
     local function custom_entry_display(entry)
@@ -21,7 +25,7 @@ return {
       local icon, icon_hl = icons.get_icon(entry.filename, vim.fn.fnamemodify(entry.filename, ":e"))
       local icon_width = vim.fn.strdisplaywidth(icon or " ")
 
-      local transformed_path = utils.transform_path({ path_display = { "smart" } }, entry.filename)
+      local transformed_path = utils.transform_path({ path_display = custom_path }, entry.filename)
       local path_width = vim.fn.strdisplaywidth(transformed_path)
 
       local line_col = entry.lnum .. ":" .. entry.col
@@ -53,11 +57,40 @@ return {
       return new_entry
     end
 
-    -- New custom entry maker for LSP references
     local function lsp_ref_entry_maker(entry)
       local make_entry = require("telescope.make_entry")
+      local utils = require("telescope.utils")
       local new_entry = make_entry.gen_from_quickfix()(entry)
-      new_entry.display = custom_entry_display
+
+      -- Convert absolute path to relative path
+      new_entry.filename = vim.fn.fnamemodify(entry.filename, ":.")
+
+      new_entry.display = function(entry)
+        local icon, icon_hl = utils.get_devicons(entry.filename)
+        local icon_width = vim.fn.strdisplaywidth(icon or " ")
+        local transformed_path = utils.transform_path({ path_display = custom_path }, entry.filename)
+        local path_width = vim.fn.strdisplaywidth(transformed_path)
+        local line_col = entry.lnum .. ":" .. entry.col
+        local line_col_width = vim.fn.strdisplaywidth(line_col)
+
+        local displayer = require("telescope.pickers.entry_display").create({
+          separator = " ",
+          items = {
+            { width = icon_width },
+            { width = path_width },
+            { width = line_col_width },
+            { remaining = true },
+          },
+        })
+
+        return displayer({
+          { icon or " ", icon_hl },
+          { transformed_path, "TelescopeResultsStruct" },
+          { line_col, "TelescopeResultsNumber" },
+          { (entry.text or ""):gsub("^%s+", ""), "TelescopeResultsStruct" },
+        })
+      end
+
       return new_entry
     end
 
@@ -71,7 +104,7 @@ return {
         end,
         layout_strategy = "horizontal",
         layout_config = {
-          width = 0.8,
+          width = 0.85,
           height = 0.9,
         },
         entry_maker = custom_entry_maker,
@@ -85,7 +118,7 @@ return {
       lsp_references_opts = vim.tbl_deep_extend("force", {
         layout_strategy = "horizontal",
         layout_config = {
-          width = 0.8,
+          width = 0.85,
           height = 0.9,
         },
         entry_maker = lsp_ref_entry_maker,
@@ -96,10 +129,10 @@ return {
     -- Apply smart path display to all pickers
     opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
       path_display = {
-        shorten = {
-          len = 3,
-          exclude = { -1, -2, -3 },
-        },
+        custom_path,
+      },
+      layout_config = {
+        width = 0.85,
       },
     })
 
