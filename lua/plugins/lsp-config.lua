@@ -88,6 +88,7 @@ return {
         ["powershell"] = { "powershell_es" },
         ["python"] = { "black" },
         ["yaml"] = { "prettier" },
+        ["json"] = { "prettier" },
       },
     },
   },
