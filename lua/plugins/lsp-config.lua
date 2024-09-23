@@ -70,6 +70,7 @@ return {
         "ruff-lsp",
         "mypy",
         "pylint",
+        "lua-language-server",
       })
     end,
   },
