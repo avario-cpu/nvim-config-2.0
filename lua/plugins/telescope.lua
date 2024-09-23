@@ -95,7 +95,12 @@ return {
 
     -- Apply smart path display to all pickers
     opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
-      path_display = { "smart" },
+      path_display = {
+        shorten = {
+          len = 3,
+          exclude = { -1, -2, -3 },
+        },
+      },
     })
 
     return opts
