@@ -22,24 +22,24 @@ return {
                 pycodestyle = { enabled = false },
                 mccabe = { enabled = true },
                 mypy = { enabled = true },
-                jedi_references = { enabled = true },
+                jedi_references = { enabled = false }, -- false to avoid duplicate references with pyright
               },
             },
           },
         },
-        -- pyright = {
-        --   priority = 1,
-        --   settings = {
-        --     python = {
-        --       analysis = {
-        --         autoSearchPaths = true,
-        --         typeCheckingMode = "basic",
-        --         diagnosticMode = "workspace",
-        --         useLibraryCodeForTypes = true,
-        --       },
-        --     },
-        --   },
-        -- },
+        pyright = { -- Using in addition to pylsp because only pyright provides workspace symbols
+          priority = 1,
+          settings = {
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                typeCheckingMode = "basic",
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
+        },
         ruff_lsp = {},
         yamlls = {},
       }
