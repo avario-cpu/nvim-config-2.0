@@ -1,5 +1,6 @@
 return {
   "echasnovski/mini.indentscope",
+  enabled = false,
   opts = {
     draw = {
       delay = 1,
