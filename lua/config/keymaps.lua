@@ -45,18 +45,18 @@ map("c", "<A-n>", "<Down>")
 
 -- clipboard
 map("v", "<C-y>", '"+y', opts)
-map("n", "<leader>YA", 'ggVG"+y', opts)
+map("n", "<leader>ya", 'ggVG"+y', { noremap = true, silent = true, desc = "Copy file to system clipboard" })
 local clipboard_utils = require("functions.clipboard")
 map(
   "n",
-  "<leader>YP",
+  "<leader>yA",
   clipboard_utils.append_file_to_system_register,
   { desc = "Append file content to system clipboard" }
 )
 map(
   "n",
   "<leader>+",
-  clipboard_utils.append_reg_to_sys_clipboard,
+  clipboard_utils.append_empty_reg_to_system_reg,
   { noremap = true, silent = true, desc = "Send register to system clipboard" }
 )
 
