@@ -23,6 +23,7 @@ return {
                 mccabe = { enabled = true },
                 mypy = { enabled = true },
                 jedi_references = { enabled = false }, -- false to avoid duplicate references with pyright
+                jedi_definition = { enabled = false }, -- false to avoid duplicate definitions with pyright
               },
             },
           },
