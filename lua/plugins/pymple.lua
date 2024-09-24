@@ -1,6 +1,7 @@
 return {
   {
     "alexpasmantier/pymple.nvim",
+    enabled = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
