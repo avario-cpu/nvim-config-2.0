@@ -104,7 +104,7 @@ return {
         end,
         layout_strategy = "horizontal",
         layout_config = {
-          width = 0.85,
+          width = 0.8,
           height = 0.9,
         },
         entry_maker = custom_entry_maker,
@@ -118,7 +118,7 @@ return {
       lsp_references_opts = vim.tbl_deep_extend("force", {
         layout_strategy = "horizontal",
         layout_config = {
-          width = 0.85,
+          width = 0.8,
           height = 0.9,
         },
         entry_maker = lsp_ref_entry_maker,
@@ -132,7 +132,7 @@ return {
         custom_path,
       },
       layout_config = {
-        width = 0.85,
+        width = 0.8,
       },
     })
 
