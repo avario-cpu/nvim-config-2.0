@@ -1,3 +1,12 @@
+-- For copying entry to clipboard
+local function yank_command()
+  local selection = require("telescope.actions.state").get_selected_entry()
+  if selection then
+    vim.fn.setreg("+", selection.value)
+    print("Yanked to clipboard: " .. selection.value)
+  end
+end
+
 return {
   "telescope.nvim",
   dependencies = {
@@ -50,7 +59,7 @@ return {
     end
 
     -- Custom entry maker for live_grep (unchanged)
-    local function custom_entry_maker(entry)
+    local function live_grep_entry_maker(entry)
       local make_entry = require("telescope.make_entry")
       local new_entry = make_entry.gen_from_vimgrep()(entry)
       new_entry.display = custom_entry_display
@@ -100,6 +109,7 @@ return {
       live_grep_opts = vim.tbl_extend("force", {
         attach_mappings = function(_, map)
           map("i", "<c-e>", actions.to_fuzzy_refine)
+          map("i", "<c-y>", yank_command)
           return true
         end,
         layout_strategy = "horizontal",
@@ -107,7 +117,7 @@ return {
           width = 0.8,
           height = 0.9,
         },
-        entry_maker = custom_entry_maker,
+        entry_maker = live_grep_entry_maker,
       }, live_grep_opts or {})
       old_live_grep(live_grep_opts)
     end
@@ -124,6 +134,24 @@ return {
         entry_maker = lsp_ref_entry_maker,
       }, lsp_references_opts or {})
       old_lsp_references(lsp_references_opts)
+    end
+
+    -- Override the command_history function (command search)
+    local old_commands = builtin.command_history
+    builtin.command_history = function(command_opts)
+      command_opts = vim.tbl_deep_extend("force", {
+        attach_mappings = function(_, map)
+          map("i", "<C-y>", yank_command)
+          map("n", "<C-y>", yank_command)
+          return true
+        end,
+        layout_strategy = "horizontal",
+        layout_config = {
+          width = 0.8,
+          height = 0.9,
+        },
+      }, command_opts or {})
+      old_commands(command_opts)
     end
 
     -- Apply smart path display to all pickers

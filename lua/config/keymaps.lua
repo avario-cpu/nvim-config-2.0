@@ -44,7 +44,6 @@ map("c", "<A-p>", "<Up>")
 map("c", "<A-n>", "<Down>")
 
 -- clipboard
-map("v", "<C-y>", '"+y', opts)
 map("n", "<leader>ya", 'ggVG"+y', { noremap = true, silent = true, desc = "Copy file to system clipboard" })
 local clipboard_utils = require("functions.clipboard")
 map(
