@@ -10,8 +10,24 @@ end
 function M.append_empty_reg_to_system_reg()
   local unnamed_register = vim.fn.getreg('"')
   local system_register = vim.fn.getreg("+")
-  local new_register_content = system_register .. "\n\n\n" .. unnamed_register
+
+  -- Count the number of lines in the unnamed register
+  local lines_added = select(2, string.gsub(unnamed_register, "\n", "\n"))
+
+  local new_register_content = system_register .. "\n" .. unnamed_register
   vim.fn.setreg("+", new_register_content)
+
+  -- Count the total number of lines in the new system register
+  local total_lines = select(2, string.gsub(new_register_content, "\n", "\n"))
+
+  -- Create and show the notification
+  local notification_message = string.format(
+    "Added %d %s to system register\nTotal lines: %d",
+    lines_added,
+    lines_added == 1 and "line" or "lines",
+    total_lines
+  )
+  vim.notify(notification_message, vim.log.levels.INFO, { title = "Register Update" })
 end
 
 return M
