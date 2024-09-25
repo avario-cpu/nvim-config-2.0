@@ -74,12 +74,12 @@ return {
       -- Convert absolute path to relative path
       new_entry.filename = vim.fn.fnamemodify(entry.filename, ":.")
 
-      new_entry.display = function(entry)
-        local icon, icon_hl = utils.get_devicons(entry.filename)
+      new_entry.display = function(display_entry)
+        local icon, icon_hl = utils.get_devicons(display_entry.filename)
         local icon_width = vim.fn.strdisplaywidth(icon or " ")
-        local transformed_path = utils.transform_path({ path_display = custom_path }, entry.filename)
+        local transformed_path = utils.transform_path({ path_display = custom_path }, display_entry.filename)
         local path_width = vim.fn.strdisplaywidth(transformed_path)
-        local line_col = entry.lnum .. ":" .. entry.col
+        local line_col = display_entry.lnum .. ":" .. display_entry.col
         local line_col_width = vim.fn.strdisplaywidth(line_col)
 
         local displayer = require("telescope.pickers.entry_display").create({
@@ -96,7 +96,7 @@ return {
           { icon or " ", icon_hl },
           { transformed_path, "TelescopeResultsStruct" },
           { line_col, "TelescopeResultsNumber" },
-          { (entry.text or ""):gsub("^%s+", ""), "TelescopeResultsStruct" },
+          { (display_entry.text or ""):gsub("^%s+", ""), "TelescopeResultsStruct" },
         })
       end
 

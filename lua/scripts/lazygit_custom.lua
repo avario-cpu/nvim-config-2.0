@@ -14,7 +14,7 @@ end
 -- Function to check clipboard with retries
 local function getRelativeFilepath(retries, delay)
   local relative_filepath
-  for i = 1, retries do
+  for _ = 1, retries do
     relative_filepath = vim.fn.getreg("+")
     if relative_filepath ~= "" then
       return relative_filepath -- Return filepath if clipboard is not empty
