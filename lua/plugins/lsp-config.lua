@@ -54,6 +54,7 @@ return {
         -- "pyright",
         "powershell-editor-services",
         "black",
+        "docformatter",
         "ruff-lsp",
         "pylint",
         "lua-language-server",
@@ -74,8 +75,14 @@ return {
     opts = {
       formatters_by_ft = {
         ["powershell"] = { "powershell_es" },
-        ["python"] = { "black" },
+        ["python"] = { "black", "docformatter" },
         ["yaml"] = { "prettier" },
+      },
+      formatters = {
+        args = {
+          black = { "--line-length", "88" },
+          docformatter = { "--wrap-summaries", "88", "--wrap-descriptions", "88" },
+        },
       },
     },
   },
