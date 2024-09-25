@@ -29,6 +29,7 @@ return {
           },
           on_attach = function(client, _)
             client.server_capabilities.renameProvider = false -- let pyright handle renames
+            client.server_capabilities.documentSymbolProvider = false -- let pyright handle symbols
           end,
         },
         pyright = { -- Using in addition to pylsp because only pyright provides workspace symbols
