@@ -70,7 +70,7 @@ function StartLazygit()
   vim.api.nvim_buf_set_keymap(
     float_term.buf,
     "t",
-    "<c-e>",
+    "<a-e>",
     string.format([[<Cmd>lua LazygitEdit(%d)<CR>]], current_buffer),
     { noremap = true, silent = true }
   )
