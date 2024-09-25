@@ -18,7 +18,7 @@ return {
               plugins = {
                 rope_autoimport = { enabled = true },
                 pylint = { enabled = false }, -- Use standalone
-                pyflakes = { enabled = true },
+                pyflakes = { enabled = false }, -- Use Ruff instead (incorporates pyflakes checks)
                 pycodestyle = { enabled = false },
                 mccabe = { enabled = true },
                 mypy = { enabled = true },
@@ -51,7 +51,7 @@ return {
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       vim.list_extend(opts.ensure_installed, {
-        -- "pyright",
+        "pyright",
         "powershell-editor-services",
         "black",
         "docformatter",
@@ -59,6 +59,7 @@ return {
         "pylint",
         "lua-language-server",
         "python-lsp-server",
+        "taplo", -- TOML formatter
       })
     end,
   },

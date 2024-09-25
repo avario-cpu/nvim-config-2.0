@@ -5,13 +5,25 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local null_ls = require("null-ls")
+      local h = require("null-ls.helpers")
+      local methods = require("null-ls.methods")
+
+      local taplo = h.make_builtin({
+        name = "taplo",
+        method = methods.internal.FORMATTING,
+        filetypes = { "toml" },
+        generator_opts = {
+          command = "taplo",
+          args = { "format", "-" },
+          to_stdin = true,
+        },
+        factory = h.formatter_factory,
+      })
+
       null_ls.setup({
         sources = {
-          -- null_ls.builtins.formatting.isort,
-          -- null_ls.builtins.formatting.black,
-          -- null_ls.builtins.diagnostics.flake8,
-          -- null_ls.builtins.diagnostics.mypy,
           null_ls.builtins.diagnostics.pylint,
+          taplo,
         },
         autostart = true,
       })
