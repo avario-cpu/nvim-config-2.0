@@ -16,7 +16,7 @@ return {
           settings = {
             pylsp = {
               plugins = {
-                rope_autoimport = { enabled = true },
+                rope_autoimport = { enabled = true, memory = false }, -- use memory false to avoid old imports path showing up in quickfix
                 pylint = { enabled = false }, -- Use standalone
                 pyflakes = { enabled = false }, -- Use Ruff instead (incorporates pyflakes checks)
                 pycodestyle = { enabled = false },
@@ -27,6 +27,9 @@ return {
               },
             },
           },
+          on_attach = function(client, _)
+            client.server_capabilities.renameProvider = false -- let pyright handle renames
+          end,
         },
         pyright = { -- Using in addition to pylsp because only pyright provides workspace symbols
           priority = 1,
