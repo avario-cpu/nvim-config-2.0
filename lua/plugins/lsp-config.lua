@@ -17,7 +17,7 @@ return {
             pylsp = {
               plugins = {
                 rope_autoimport = { enabled = true, memory = false }, -- use memory false to avoid old imports path showing up in quickfix
-                pylint = { enabled = false }, -- Use standalone
+                pylint = { enabled = true, executable = "pylint" },
                 pyflakes = { enabled = false }, -- Use Ruff instead (incorporates pyflakes checks)
                 pycodestyle = { enabled = false },
                 mccabe = { enabled = true },
@@ -44,6 +44,9 @@ return {
               },
             },
           },
+          on_attach = function(client, _)
+            client.server_capabilities.signatureHelpProvider = false -- let pylsp handle signature help
+          end,
         },
         ruff_lsp = {},
         yamlls = {},
