@@ -45,7 +45,19 @@ return {
       map("n", "<leader>ghB", function()
         gs.blame()
       end, "Blame Buffer")
-      map("n", "<leader>ghd", gs.diffthis, "Diff This")
+
+      vim.api.nvim_set_keymap("n", "<leader>ghd", "", {
+        noremap = true,
+        silent = true,
+        callback = function()
+          vim.cmd("tabnew")
+          vim.cmd("buffer #")
+          require("gitsigns").diffthis()
+          vim.api.nvim_buf_set_keymap(0, "n", "q", ":tabclose<CR>", { noremap = true, silent = true })
+        end,
+        desc = "Open diff in new tab",
+      })
+
       map("n", "<leader>ghD", function()
         gs.diffthis("~")
       end, "Diff This ~")
