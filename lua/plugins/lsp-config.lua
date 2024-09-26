@@ -57,7 +57,7 @@ return {
       vim.list_extend(opts.ensure_installed, {
         "pyright",
         "powershell-editor-services",
-        "black",
+        "ruff",
         "docformatter",
         "ruff-lsp",
         "pylint",
@@ -80,13 +80,12 @@ return {
     opts = {
       formatters_by_ft = {
         ["powershell"] = { "powershell_es" },
-        ["python"] = { "black", "docformatter" },
+        ["python"] = { "ruff_format" },
         ["yaml"] = { "prettier" },
       },
       formatters = {
         args = {
-          black = { "--line-length", "88" },
-          docformatter = { "--wrap-summaries", "88", "--wrap-descriptions", "88" },
+          ruff_format = { "--line-length", "88" },
         },
       },
     },
