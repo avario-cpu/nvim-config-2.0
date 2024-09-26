@@ -11,3 +11,11 @@ function ToggleQuickfix()
     vim.cmd("copen")
   end
 end
+
+-- Toggle quickfix
+vim.keymap.set(
+  "n",
+  "<leader>qf",
+  ":lua ToggleQuickfix()<CR>",
+  { noremap = true, silent = true, desc = "Toggle quickfix" }
+)
