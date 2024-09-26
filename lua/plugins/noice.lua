@@ -1,8 +1,8 @@
 return {
   "folke/noice.nvim",
   enabled = true,
-  opts = {
-    presets = {
+  opts = function(_, opts)
+    opts.presets = {
       bottom_search = false,
       command_palette = {
         views = {
@@ -17,15 +17,16 @@ return {
               height = "auto",
             },
           },
-          -- uncomment lines below if not used nvim-cmp as backend
-          -- cmdline_popupmenu = {
-          --     position = {
-          --         row = "80%",
-          --         col = "50%",
-          --     },
-          -- },
         },
       },
-    },
-  },
+    }
+
+    -- Disable automatic signature help
+    opts.lsp = opts.lsp or {}
+    opts.lsp.signature = {
+      auto_open = { enabled = false },
+    }
+
+    return opts
+  end,
 }
