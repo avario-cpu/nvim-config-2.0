@@ -108,8 +108,9 @@ return {
     builtin.live_grep = function(live_grep_opts)
       live_grep_opts = vim.tbl_extend("force", {
         attach_mappings = function(_, map)
-          map("i", "<c-e>", actions.to_fuzzy_refine)
-          map("i", "<c-y>", yank_command)
+          map("i", "<C-e>", actions.to_fuzzy_refine)
+          map("i", "<C-y>", yank_command)
+          map("n", "<C-y>", yank_command)
           return true
         end,
         layout_strategy = "horizontal",
@@ -152,6 +153,15 @@ return {
         },
       }, command_opts or {})
       old_commands(command_opts)
+    end
+
+    -- Override the buffers function
+    local old_buffers = builtin.buffers
+    builtin.buffers = function(buffers_opts)
+      buffers_opts = vim.tbl_deep_extend("force", {
+        layout_strategy = "vertical",
+      }, buffers_opts or {})
+      old_buffers(buffers_opts)
     end
 
     -- Apply smart path display to all pickers
