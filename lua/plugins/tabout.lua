@@ -1,7 +1,7 @@
 return {
   {
     "abecodes/tabout.nvim",
-    lazy = false,
+    lazy = false, -- Will break nvim cmp if true for some reason
     config = function()
       require("tabout").setup({
         tabkey = "<S-Tab>", -- key to trigger tabout, set to an empty string to disable
