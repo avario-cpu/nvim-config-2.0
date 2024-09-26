@@ -16,6 +16,14 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
   end,
 })
 
+-- Allow quitting command line windows with q
+vim.api.nvim_create_autocmd("CmdwinEnter", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, "n", "q", ":q<CR>", { noremap = true })
+  end,
+})
+
 -- Enable wrap for diffs, with no mid-word wrap
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "diff",
