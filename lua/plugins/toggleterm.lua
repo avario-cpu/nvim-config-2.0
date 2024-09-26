@@ -2,7 +2,7 @@ return {
   "akinsho/toggleterm.nvim",
   version = "*",
   config = function()
-    local original_height = 12 -- Store the original height
+    local original_height = 10 -- Store the original height
     local is_maximized = false -- Flag to track maximized state
 
     local Terminal = require("toggleterm.terminal").Terminal
@@ -15,11 +15,13 @@ return {
       vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
       vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
       vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
+
       -- Resize mappings
       vim.keymap.set("t", "<C-Up>", [[<Cmd>resize +2<CR>]], opts)
       vim.keymap.set("t", "<C-Down>", [[<Cmd>resize -2<CR>]], opts)
       vim.keymap.set("t", "<C-Left>", [[<Cmd>vertical resize -2<CR>]], opts)
       vim.keymap.set("t", "<C-Right>", [[<Cmd>vertical resize +2<CR>]], opts)
+
       -- Toggle maximize mapping
       vim.keymap.set("t", "<C-e>", function()
         if is_maximized then
@@ -31,10 +33,14 @@ return {
           is_maximized = true
         end
       end, opts)
-      -- Close terminal mapping
-      vim.keymap.set("t", "<C-q>", function()
+
+      -- Close (delete) terminal mapping
+      vim.keymap.set("t", "<C-d>", function()
         vim.api.nvim_buf_delete(term.bufnr, { force = true })
       end, opts)
+
+      -- Hide terminal mapping
+      vim.api.nvim_set_keymap("t", "<C-q>", [[<Cmd>ToggleTermToggleAll<CR>]], { noremap = true, silent = true })
     end
 
     -- Function to create a new terminal
