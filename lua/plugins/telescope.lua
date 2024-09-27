@@ -12,11 +12,13 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-fzf-native.nvim",
+    "fannheyward/telescope-coc.nvim", -- Coc extension
   },
 
   keys = {
     { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
     { "<leader>fr", LazyVim.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
+    { "gR", "<cmd>Telescope coc references<cr>", desc = "Coc References" },
   },
 
   opts = function(_, opts)
@@ -174,6 +176,22 @@ return {
       },
     })
 
+    -- Add coc extension configuration
+    opts.extensions = opts.extensions or {}
+    opts.extensions.coc = {
+      theme = "ivy",
+      prefer_locations = true,
+      push_cursor_on_edit = true,
+      timeout = 3000,
+    }
+
+    -- Load the coc extension
+    require("telescope").load_extension("coc")
     return opts
+  end,
+
+  config = function(_, opts)
+    require("telescope").setup(opts)
+    require("telescope").load_extension("coc")
   end,
 }
