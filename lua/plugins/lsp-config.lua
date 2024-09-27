@@ -13,7 +13,7 @@ return {
           },
         },
         pylsp = {
-          autostart = false,
+          autostart = true,
           settings = {
             pylsp = {
               plugins = {
@@ -38,8 +38,8 @@ return {
           -- cmd = { "pylsp" },
           on_attach = function(client, _)
             -- Some pylsp features are disabled to avoid duplicates with pyright
-            client.server_capabilities.renameProvider = false
-            client.server_capabilities.documentSymbolProvider = false -- revert later
+            client.server_capabilities.renameProvider = true
+            client.server_capabilities.documentSymbolProvider = false
 
             vim.lsp.handlers["textDocument/references"] = vim.lsp.with(vim.lsp.handlers.references, {
               includeDeclaration = true,
@@ -47,7 +47,7 @@ return {
           end,
         },
         pyright = { -- Only pyright provides workspace symbols
-          autostart = false,
+          autostart = true,
           priority = 1,
           settings = {
             python = {
@@ -65,9 +65,9 @@ return {
             client.server_capabilities.renameProvider = false
           end,
         },
-        ruff_lsp = {
-          autostart = false,
-        },
+        -- ruff_lsp = {
+        --   autostart = false, -- I think there is a server starting with ruff standalone, which covers the same functionality
+        -- },
         yamlls = {},
       }
     end,
@@ -81,7 +81,7 @@ return {
         "powershell-editor-services",
         "ruff",
         "docformatter",
-        "ruff-lsp",
+        -- "ruff-lsp",
         "pylint",
         "lua-language-server",
         "python-lsp-server",
