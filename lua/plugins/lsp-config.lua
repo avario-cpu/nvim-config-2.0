@@ -21,18 +21,24 @@ return {
                 pyflakes = { enabled = false }, -- Use Ruff instead (incorporates pyflakes checks)
                 pycodestyle = { enabled = false },
                 mccabe = { enabled = true },
+                -- some of these below can be disabled to avoid pyright duplicates
                 mypy = { enabled = true },
-                jedi_references = { enabled = false }, -- false to avoid duplicate references with pyright
-                jedi_definition = { enabled = false }, -- false to avoid duplicate definitions with pyright
+                jedi_references = { enabled = false },
+                jedi_definition = { enabled = false },
               },
             },
           },
           on_attach = function(client, _)
-            client.server_capabilities.renameProvider = false -- let pyright handle renames
-            client.server_capabilities.documentSymbolProvider = false -- let pyright handle symbols
+            -- Some pylsp features are disabled to avoid duplicates with pyright
+            client.server_capabilities.renameProvider = false
+            client.server_capabilities.documentSymbolProvider = false
+
+            vim.lsp.handlers["textDocument/references"] = vim.lsp.with(vim.lsp.handlers.references, {
+              includeDeclaration = true,
+            })
           end,
         },
-        pyright = { -- Using in addition to pylsp because only pyright provides workspace symbols
+        pyright = { -- Only pyright provides workspace symbols
           priority = 1,
           settings = {
             python = {
@@ -45,7 +51,8 @@ return {
             },
           },
           on_attach = function(client, _)
-            client.server_capabilities.signatureHelpProvider = false -- let pylsp handle signature help
+            client.server_capabilities.signatureHelpProvider = false
+            client.server_capabilities.referencesProvider = true
           end,
         },
         ruff_lsp = {},
