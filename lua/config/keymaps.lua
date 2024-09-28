@@ -82,3 +82,6 @@ vim.api.nvim_set_keymap("n", "<A-Enter>", "O<Esc>j", { noremap = true, silent = 
 -- Rebind macro key cause mistakes are made too often lol
 vim.api.nvim_set_keymap("n", "q", "", { noremap = true })
 vim.api.nvim_set_keymap("n", "Q", "q", { noremap = true })
+
+-- Delete whole word with ctrl+backspace (interpreted as <C-h> in terminal)
+vim.api.nvim_set_keymap("i", "<C-h>", "<C-w>", { noremap = true })
