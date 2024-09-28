@@ -33,8 +33,10 @@ return {
     local function custom_entry_display(entry)
       local icons = require("nvim-web-devicons")
       local utils = require("telescope.utils")
+      local icon, icon_hl = icons.get_icon(entry.filename, vim.fn.fnamemodify(entry.filename, ":e"))
       local icon_width = vim.fn.strdisplaywidth(icon or " ")
 
+      local transformed_path = utils.transform_path({ path_display = custom_path }, entry.filename)
       local path_width = vim.fn.strdisplaywidth(transformed_path)
 
       local line_col = entry.lnum .. ":" .. entry.col
