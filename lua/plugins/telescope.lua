@@ -18,11 +18,12 @@ return {
   keys = {
     { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
     { "<leader>fr", LazyVim.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
-    { "gR", "<cmd>Telescope coc references<cr>", desc = "Coc References" },
+    -- { "gR", "<cmd>Telescope coc references<cr>", desc = "Coc References" },
   },
 
   opts = function(_, opts)
     local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
     local builtin = require("telescope.builtin")
     local custom_path = { shorten = {
       len = 3,
@@ -165,6 +166,34 @@ return {
       }, buffers_opts or {})
       old_buffers(buffers_opts)
     end
+
+    function Lsp_references_no_imports()
+      local filter_import = function(entry)
+        return not (
+          entry.text and entry.text:match(".*%f[%w]import%f[%W].*") or entry.text:match(".*%f[%w]from%f[%W].*")
+        )
+      end
+
+      builtin.lsp_references({
+        layout_strategy = "horizontal",
+        layout_config = {
+          width = 0.85,
+          height = 0.9,
+        },
+        entry_maker = function(entry)
+          local new_entry = lsp_ref_entry_maker(entry)
+          if filter_import(new_entry) then
+            return new_entry
+          end
+        end,
+      })
+    end
+
+    vim.keymap.set("n", "gR", ":lua Lsp_references_no_imports()<CR>", {
+      noremap = true,
+      silent = true,
+      desc = "LSP References (no imports)",
+    })
 
     -- Apply smart path display to all pickers
     opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
