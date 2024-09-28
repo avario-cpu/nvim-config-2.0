@@ -2,6 +2,44 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+
+      -- Find and modify the "]]" keymap to "]r"
+      for i, keymap in ipairs(keys) do
+        if keymap[1] == "]]" then
+          keys[i] = {
+            "]r",
+            function()
+              LazyVim.lsp.words.jump(vim.v.count1)
+            end,
+            desc = "Next Reference",
+            has = "documentHighlight",
+            cond = function()
+              return LazyVim.lsp.words.enabled
+            end,
+          }
+          break
+        end
+      end
+
+      -- Find and modify the "[[" keymap to "[r"
+      for i, keymap in ipairs(keys) do
+        if keymap[1] == "[[" then
+          keys[i] = {
+            "[r",
+            function()
+              LazyVim.lsp.words.jump(-vim.v.count1)
+            end,
+            desc = "Prev Reference",
+            has = "documentHighlight",
+            cond = function()
+              return LazyVim.lsp.words.enabled
+            end,
+          }
+          break
+        end
+      end
+
       opts.servers = {
         powershell_es = {
           mason = true,
@@ -63,6 +101,7 @@ return {
             client.server_capabilities.signatureHelpProvider = false
             client.server_capabilities.referencesProvider = true
             client.server_capabilities.renameProvider = false
+            -- client.server_capabilities.definitionProvider = false
           end,
         },
         -- ruff_lsp = {
