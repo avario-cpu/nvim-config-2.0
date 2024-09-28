@@ -4,13 +4,11 @@ local function live_grep_neotree_dir()
   if not state then
     return
   end
-
   -- Get the node under the cursor
   local node = state.tree:get_node()
   if not node then
     return
   end
-
   local path
   if node.type == "directory" then
     path = node:get_id()
@@ -21,8 +19,14 @@ local function live_grep_neotree_dir()
     return
   end
 
-  -- Use Telescope to live_grep in the selected directory
-  require("telescope.builtin").live_grep({ search_dirs = { path } })
+  -- Create a title for the picker
+  local title = "Grep in: " .. vim.fn.fnamemodify(path, ":~:.")
+
+  -- Use Telescope to live_grep in the selected directory with a custom title
+  require("telescope.builtin").live_grep({
+    search_dirs = { path },
+    prompt_title = title,
+  })
 end
 
 -- Set up the keymap
@@ -33,7 +37,7 @@ vim.api.nvim_create_autocmd("FileType", {
       noremap = true,
       silent = true,
       callback = live_grep_neotree_dir,
-      desc = "Live grep in neotree directory",
+      desc = "Grep neotree directory",
     })
   end,
 })
