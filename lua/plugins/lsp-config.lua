@@ -75,7 +75,7 @@ return {
           -- cmd = { "pylsp" },
           on_attach = function(client, _)
             -- Some pylsp features are disabled to avoid duplicates with pyright
-            client.server_capabilities.renameProvider = false -- has rope rename
+            client.server_capabilities.renameProvider = true -- has rope rename
             client.server_capabilities.documentSymbolProvider = false
             client.server_capabilities.definitionProvider = false -- pyright better
 
