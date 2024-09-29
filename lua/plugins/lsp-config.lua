@@ -55,19 +55,18 @@ return {
           settings = {
             pylsp = {
               plugins = {
-                rope_autoimport = { enabled = true, memory = false }, -- use memory false to avoid old imports path showing up in quickfix
-                pylint = { enabled = true, executable = "pylint" },
+                rope_autoimport = { enabled = true, memory = true }, -- never know what to use for memory here but for now true is fine
+                pylint = { enabled = false, executable = "pylint" },
                 pyflakes = { enabled = false }, -- Use Ruff instead (incorporates pyflakes checks)
                 pycodestyle = { enabled = false },
                 mccabe = { enabled = true },
                 mypy = { enabled = true },
                 jedi_references = { enabled = false },
                 jedi_definition = { enabled = false },
-                -- pylsp_rope = { rename = true },
                 -- pylsp_rope = {
                 --   rename = true,
                 -- },
-                -- Disable other rename providers
+                -- -- Disable other rename providers
                 -- rope_rename = { enabled = false },
                 -- jedi_rename = { enabled = false },
               },
@@ -76,8 +75,9 @@ return {
           -- cmd = { "pylsp" },
           on_attach = function(client, _)
             -- Some pylsp features are disabled to avoid duplicates with pyright
-            client.server_capabilities.renameProvider = true
+            client.server_capabilities.renameProvider = false -- has rope rename
             client.server_capabilities.documentSymbolProvider = false
+            client.server_capabilities.definitionProvider = false -- pyright better
 
             vim.lsp.handlers["textDocument/references"] = vim.lsp.with(vim.lsp.handlers.references, {
               includeDeclaration = true,
@@ -94,14 +94,15 @@ return {
                 typeCheckingMode = "basic",
                 diagnosticMode = "workspace",
                 useLibraryCodeForTypes = true,
+                -- autoImportCompletions = true,
               },
             },
           },
           on_attach = function(client, _)
             client.server_capabilities.signatureHelpProvider = false
             client.server_capabilities.referencesProvider = true
-            client.server_capabilities.renameProvider = false
-            -- client.server_capabilities.definitionProvider = false
+            client.server_capabilities.renameProvider = false -- cannot rename module imports
+            client.server_capabilities.definitionProvider = true
           end,
         },
         -- ruff_lsp = {
@@ -119,7 +120,6 @@ return {
         "pyright",
         "powershell-editor-services",
         "ruff",
-        "docformatter",
         -- "ruff-lsp",
         "pylint",
         "lua-language-server",
