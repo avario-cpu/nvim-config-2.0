@@ -12,13 +12,13 @@ return {
       keymaps = {
         view = {
           ["q"] = actions.close,
+          ["<C-j>"] = "]czz",
+          ["<C-k>"] = "[czz",
         },
         file_panel = {
-          -- Make 'q' close Diffview in the file panel
           ["q"] = actions.close,
         },
         file_history_panel = {
-          -- Make 'q' close Diffview in the file history panel
           ["q"] = actions.close,
         },
       },
