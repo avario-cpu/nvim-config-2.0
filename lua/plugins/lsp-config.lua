@@ -78,6 +78,7 @@ return {
             client.server_capabilities.renameProvider = true -- has rope rename
             client.server_capabilities.documentSymbolProvider = false
             client.server_capabilities.definitionProvider = false -- pyright better
+            client.server_capabilities.hoverProvider = false -- pyright better
 
             vim.lsp.handlers["textDocument/references"] = vim.lsp.with(vim.lsp.handlers.references, {
               includeDeclaration = true,

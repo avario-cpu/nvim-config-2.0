@@ -53,7 +53,23 @@ return {
           vim.cmd("tabnew")
           vim.cmd("buffer #")
           require("gitsigns").diffthis()
-          vim.api.nvim_buf_set_keymap(0, "n", "q", ":tabclose<CR>", { noremap = true, silent = true })
+
+          -- close tab with q
+          vim.keymap.set("n", "q", function()
+            vim.cmd("tabclose")
+          end, { buffer = true, silent = true })
+
+          -- Navigate to next change
+          vim.keymap.set("n", "<C-j>", function()
+            gs.next_hunk()
+            vim.cmd("normal! zz")
+          end, { buffer = true, silent = true })
+
+          -- Navigate to previous change
+          vim.keymap.set("n", "<C-k>", function()
+            gs.prev_hunk()
+            vim.cmd("normal! zz")
+          end, { buffer = true, silent = true })
         end,
         desc = "Open diff in new tab",
       })
