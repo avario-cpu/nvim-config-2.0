@@ -1,5 +1,6 @@
 return {
   "windwp/nvim-autopairs",
+  enabled = true, -- disabled for super specific use case of wrapping with "(" before a line conflicting with vim visual multi
   event = "InsertEnter",
   config = function()
     local npairs = require("nvim-autopairs")
