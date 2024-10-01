@@ -55,11 +55,11 @@ return {
           settings = {
             pylsp = {
               plugins = {
-                rope_autoimport = { enabled = true, memory = true }, -- never know what to use for memory here but for now true is fine
+                rope_autoimport = { enabled = false, memory = true }, -- never know what to use for memory here but for now true is fine # LAGGY AF right now
                 pylint = { enabled = false, executable = "pylint" },
                 pyflakes = { enabled = false }, -- Use Ruff instead (incorporates pyflakes checks)
                 pycodestyle = { enabled = false },
-                mccabe = { enabled = true },
+                mccabe = { enabled = false },
                 mypy = { enabled = true },
                 jedi_references = { enabled = false },
                 jedi_definition = { enabled = false },
