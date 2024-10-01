@@ -8,6 +8,40 @@ return {
         vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
       end
 
+      -- Helper function to set tab-specific keymaps
+      local function set_diff_tab_keymaps(new_tab)
+        local function set_tab_keymap(mode, lhs, rhs, tab_opts)
+          tab_opts = vim.tbl_extend("force", tab_opts or {}, {
+            callback = function()
+              if vim.api.nvim_get_current_tabpage() == new_tab then
+                rhs()
+              end
+            end,
+          })
+          vim.keymap.set(mode, lhs, "", tab_opts)
+        end
+
+        -- Close tab with q
+        set_tab_keymap("n", "q", function()
+          vim.cmd("tabclose")
+          -- Rebind Ctrl+J and Ctrl+K to their original functions
+          vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to window below" })
+          vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to window above" })
+        end, { desc = "Close diff tab" })
+
+        -- Navigate to next change
+        set_tab_keymap("n", "<C-j>", function()
+          gs.next_hunk()
+          vim.cmd("normal! zz")
+        end, { desc = "Next change in diff" })
+
+        -- Navigate to previous change
+        set_tab_keymap("n", "<C-k>", function()
+          gs.prev_hunk()
+          vim.cmd("normal! zz")
+        end, { desc = "Previous change in diff" })
+      end
+
       -- Center cursor after jumping to hunks
       map("n", "]h", function()
         if vim.wo.diff then
@@ -53,30 +87,25 @@ return {
           vim.cmd("tabnew")
           vim.cmd("buffer #")
           require("gitsigns").diffthis()
-
-          -- close tab with q
-          vim.keymap.set("n", "q", function()
-            vim.cmd("tabclose")
-          end, { buffer = true, silent = true })
-
-          -- Navigate to next change
-          vim.keymap.set("n", "<C-j>", function()
-            gs.next_hunk()
-            vim.cmd("normal! zz")
-          end, { buffer = true, silent = true })
-
-          -- Navigate to previous change
-          vim.keymap.set("n", "<C-k>", function()
-            gs.prev_hunk()
-            vim.cmd("normal! zz")
-          end, { buffer = true, silent = true })
+          local new_tab = vim.api.nvim_get_current_tabpage()
+          set_diff_tab_keymaps(new_tab)
         end,
         desc = "Open diff in new tab",
       })
 
-      map("n", "<leader>ghD", function()
-        gs.diffthis("~")
-      end, "Diff This ~")
+      vim.api.nvim_set_keymap("n", "<leader>ghD", "", {
+        noremap = true,
+        silent = true,
+        callback = function()
+          vim.cmd("tabnew")
+          vim.cmd("buffer #")
+          gs.diffthis("~")
+          local new_tab = vim.api.nvim_get_current_tabpage()
+          set_diff_tab_keymaps(new_tab)
+        end,
+        desc = "Open diff with ~ in new tab",
+      })
+
       map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
     end
   end,
